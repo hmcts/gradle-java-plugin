@@ -41,6 +41,14 @@ public class JavaPluginFunctionalTest {
         assertThat(result.getOutput()).contains("pmd");
     }
 
+    @Test
+    public void javaCWarningsAreErrors() {
+            BuildResult result = runner()
+                .withArguments("functionalTestClasses", "-is")
+                .buildAndFail();
+            assertThat(result.getOutput()).contains("unchecked call to add(E)");
+    }
+
     GradleRunner runner() {
         return GradleRunner.create()
             .forwardOutput()
